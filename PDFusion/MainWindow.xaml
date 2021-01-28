@@ -1,0 +1,88 @@
+﻿<Window x:Class="PDFusion.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PDFusion"
+        mc:Ignorable="d"
+        Title="PDF Merge" Height="500" Width="800">
+    <Grid ShowGridLines="True">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Margin="2"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Center">
+            <TextBlock.Inlines>
+                <Run FontWeight="Bold" FontSize="45" Text="1" FontFamily="Arial" />
+                <LineBreak/>
+                <Run FontWeight="Bold" FontSize="12" Text="Source" FontFamily="Arial" />
+            </TextBlock.Inlines>
+        </TextBlock>
+
+        <TextBlock Margin="2"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Center">
+            <TextBlock.Inlines>
+                <Run FontWeight="Bold" FontSize="45" Text="2" FontFamily="Arial" />
+                <LineBreak/>
+                <Run FontWeight="Bold" FontSize="12" Text="Ordre" FontFamily="Arial" />
+            </TextBlock.Inlines>
+        </TextBlock>
+
+        <TextBlock Margin="2"  Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Center">
+            <TextBlock.Inlines>
+                <Run FontWeight="Bold" FontSize="45" Text="3" FontFamily="Arial" />
+                <LineBreak/>
+                <Run FontWeight="Bold" FontSize="12" Text="Export" FontFamily="Arial" />
+            </TextBlock.Inlines>
+        </TextBlock>
+
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" >
+            <Button Command="{Binding Path=OnSelectFiles}"    x:Name="btnOpenPdf"  Margin="10,2,2,2" Height="50" Width="120"   HorizontalAlignment="Center">
+                <TextBlock TextAlignment="Center">Charger<LineBreak/>PDF(s)</TextBlock>
+            </Button>
+            
+            <TextBox Text="ou" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0"/>
+            
+            <!--<Button Command="{Binding Path=OnMyButtonClick}"   x:Name="btnLoadAllFromDirectory"  Margin="2" Height="50" Width="120"   HorizontalAlignment="Center">
+                <TextBlock>Charger tous les PDFs<LineBreak/>depuis un repertoire</TextBlock>
+            </Button>
+            
+            <TextBox Text="ou" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0"/>-->
+            
+            <Button   x:Name="btnDragDrop" Margin="2" Height="50" Width="120"   HorizontalAlignment="Center" AllowDrop="True" Drop="btnDragDrop_Drop"  >
+                <TextBlock  TextAlignment="Center" >Drag &amp; drop<LineBreak/>here </TextBlock>
+            </Button>
+
+        </StackPanel>
+
+
+        <local:ItemDragAndDropListBox x:Name="listBox" ItemsSource="{Binding PdfList}"   Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20">
+            <local:ItemDragAndDropListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel HorizontalAlignment="Stretch" Width="Auto" Height="Auto"  Margin="-2" >
+                        <TextBlock Margin="2"  >
+                            <TextBlock.Inlines>
+                                <Run FontWeight="Bold" FontSize="16" Text="{Binding Name}" />
+
+                            </TextBlock.Inlines>
+                        </TextBlock>
+                        <Image Source="Images/del.png" Width="16" Height="16" HorizontalAlignment="Right" PreviewMouseLeftButtonDown="Image_PreviewMouseLeftButtonDown"  />
+                    </DockPanel>
+                </DataTemplate>
+            </local:ItemDragAndDropListBox.ItemTemplate>
+        </local:ItemDragAndDropListBox>
+
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" >
+            <Button Command="{Binding Path=OnMergeClick}"   x:Name="btnDoMerge"   Height="50" Width="120"   Content="FUSION !"   Margin="10"  HorizontalContentAlignment="Center" />
+            <CheckBox IsChecked="{Binding OpenAfterGeneration}" Margin="10" HorizontalContentAlignment="Center"> Ouvrir apres generation </CheckBox>
+        </StackPanel>
+
+    </Grid>
+</Window>
